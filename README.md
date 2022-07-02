@@ -1,17 +1,20 @@
 # KPAN
-We implemented the KPAN model on KKBox song dataset and MovieLens-IMDb (MI) dataset, compared it to a KPRN model (https://arxiv.org/abs/1811.04540). 
-Our results are described in our paper.
+We implemented the KPAN model on KKBox song dataset and MovieLens-IMDb (MI) dataset, compared it to a KPRN model (https://arxiv.org/abs/1811.04540).
 
 Python version is 3.6.9, and environment requirements can be installed using `KPAN_requirements.yml`
 
 ## Usage Information
-To train and evaluate the KPAN model, you can either use a random sample (subnetwork = rs), you can either use all data (subnetwork = full), or create a subnetwork yourself. 
+To train and evaluate the KPAN model, you have multiple choices for sample the data:
+- all data (subnetwork = full) 
+- random sampling (subnetwork = rs) - rs contains a random 10% sample of entities
+- "smart" sampling (subnetwork = dense) - contains the top 10% entities with highest degree
+- create a subnetwork yourself. 
 
 The first step is download the data:
 1) KKBox - download the `songs.csv` and `train.csv` from https://www.kaggle.com/c/kkbox-music-recommendation-challenge/data. 
-2) MI - download the `ratings.dat` and `movies.dat` from https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset, and from `movies.csv`, `names.csv` and `title.csv` from IMDb datasets (https://www.imdb.com/). Merge both datasets by movie ID and year and named the file: `ml_imdb.csv`. 
+2) MI - download the `ratings.dat` and `movies.dat` from https://www.kaggle.com/datasets/odedgolden/movielens-1m-dataset, and from IMDb datasets (https://www.imdb.com/) download `movies.csv`, `names.csv` and `title.csv`. Then, merge ML and IMDb by movie ID and year and named the file: `ml_imdb.csv`.
 
-For simplicity, we will demonstrate on the KKBox domain, but for MI domain you need to replace the word 'song' in 'movie'.
+For simplicity, we will demonstrate the instructions on the KKBox domain. For MI domain you need to replace the word 'song' in the word 'movie'.
 Create a folder called `song_dataset` in `{root}/data` and place `songs.csv` and `train.csv` in `song_dataset`.
 
 Then construct the knowledge graph with data_preparation.py (and data_preparation_ml.py for MI), and path-find, train, and evaluate using recommender.py.
@@ -25,11 +28,10 @@ Arguments:
 
 `--interactions_file` to specify path to CSV containing user-item interactions
 
-`--subnetwork` to specify data to create knowledge graph from. Options are dense, rs, sparse, and full.
-Dense contains the top 10% entities with highest degree, and rs contains a random 10% sample of entities. For our evaluation we use full.
+`--subnetwork` to specify data to create knowledge graph from. For our evaluation we use 'full'.
 
 
-### recommender.py command line arguments
+### recommender.py arguments
 
 `--train` to train model, `--validation` to add validation. `--eval` to evaluate
 

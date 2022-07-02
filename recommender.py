@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 
 import KPAN.constants.consts as consts
-from KPAN.model import KPRN, train, predict, KPRNTransformer, predict_dataloader
+from KPAN.model import KPRN, train, predict, KPAN, predict_dataloader
 from KPRN.baseline.popularity import PopularityBL
 from KPAN.data.format import format_paths
 from KPAN.data.path_extraction import find_paths_user_to_items
@@ -53,8 +53,8 @@ def parse_args():
                         help='name to save or load model from')
     parser.add_argument('--model_name',
                         type=str,
-                        default='KPRN_Transformer',
-                        choices=['KPRN','KPRN_Transformer'],
+                        default='KPAN',
+                        choices=['KPRN','KPAN'],
                         help='name to model type')
     parser.add_argument('--path_agg_method',
                         type=str,
@@ -382,15 +382,15 @@ def main(files_loc, params={}, data_loc=None):
                      hidden_dim=consts.HIDDEN_DIM,e_vocab_size=len(e_to_ix),t_vocab_size=len(t_to_ix),
                      r_vocab_size=len(r_to_ix),tagset_size=consts.TAG_SIZE,no_rel=args.no_rel)
     else: # KPAN
-        model = KPRNTransformer(e_emb_dim=consts.ENTITY_EMB_DIM, t_emb_dim=consts.TYPE_EMB_DIM,
-                                r_emb_dim=consts.REL_EMB_DIM, hidden_dim=consts.HIDDEN_DIM, e_vocab_size=len(e_to_ix),
-                                t_vocab_size=len(t_to_ix), r_vocab_size=len(r_to_ix), tagset_size=consts.TAG_SIZE,
-                                no_rel=args.no_rel, person_item_dict=person_item, dropout=args.dropout,
-                                nhead=args.nhead, nlayers=1, entities_agg=args.entity_agg,
-                                init_mf_embedding=args.init_mf_embeddings,add_path_length=args.add_path_length,
-                                path_agg=args.path_agg_method,path_nhead=args.path_nhead,
-                                mf_path=os.path.join(PROCESSED_DATA_DIR, r'mf', r'mf_initial')
-                                )
+        model = KPAN(e_emb_dim=consts.ENTITY_EMB_DIM, t_emb_dim=consts.TYPE_EMB_DIM,
+                     r_emb_dim=consts.REL_EMB_DIM, hidden_dim=consts.HIDDEN_DIM, e_vocab_size=len(e_to_ix),
+                     t_vocab_size=len(t_to_ix), r_vocab_size=len(r_to_ix), tagset_size=consts.TAG_SIZE,
+                     no_rel=args.no_rel, person_item_dict=person_item, dropout=args.dropout,
+                     nhead=args.nhead, nlayers=1, entities_agg=args.entity_agg,
+                     init_mf_embedding=args.init_mf_embeddings, add_path_length=args.add_path_length,
+                     path_agg=args.path_agg_method, path_nhead=args.path_nhead,
+                     mf_path=os.path.join(PROCESSED_DATA_DIR, r'mf', r'mf_initial')
+                     )
 
     data_ix_path = os.path.join(PROCESSED_DATA_DIR, consts.ITEM_IX_DATA_DIR + args.subnetwork)
     if args.random_samples:

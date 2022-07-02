@@ -70,7 +70,7 @@ def sort_batch(batch, indexes, lengths):
 
 
 def train(model, train_path_file, batch_size, epochs, model_path, load_checkpoint, not_in_memory, lr, l2_reg, gamma,
-          no_rel, samples=-1, random_sample=True,model_name='KPRN_Transformer',validation=False,validation_dataloader=None,
+          no_rel, samples=-1, random_sample=True,model_name='KPAN',validation=False,validation_dataloader=None,
           path_aggregation='weighted_pooling'):
     '''
     -trains and outputs a model using the input data
@@ -88,7 +88,7 @@ def train(model, train_path_file, batch_size, epochs, model_path, load_checkpoin
         loss_function = nn.BCELoss()
 
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=l2_reg)
-    if model_name == 'KPRN_Transformer':
+    if model_name == 'KPAN':
         scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
 
     if load_checkpoint:
@@ -114,7 +114,7 @@ def train(model, train_path_file, batch_size, epochs, model_path, load_checkpoin
         start_epoch = time.time()
 
         # Allows learning embeddings after 5 epochs
-        if model_name == 'KPRN_Transformer' and epoch == 5:
+        if model_name == 'KPAN' and epoch == 5:
             print('Unfreezing Embedding layer')
             model.entity_embeddings.weight.requires_grad = True
             model.type_embeddings.weight.requires_grad = True
@@ -191,7 +191,7 @@ def train(model, train_path_file, batch_size, epochs, model_path, load_checkpoin
             optimizer.step()
 
             losses.append(loss.item())
-        if model_name == 'KPRN_Transformer':
+        if model_name == 'KPAN':
             scheduler.step()
         print(f'finish epoch: {timedelta(seconds=(time.time()) - start_epoch)}')
 

@@ -34,14 +34,14 @@ class PositionalEncoding(nn.Module):
         # return self.dropout(x)
 
 
-class KPRNTransformer(KPRN):
+class KPAN(KPRN):
 
     def __init__(self, e_emb_dim, t_emb_dim, r_emb_dim, hidden_dim, e_vocab_size, t_vocab_size, r_vocab_size,
                  tagset_size, no_rel, person_item_dict, dropout=0.1, nhead=8, nlayers=1, entities_agg='max',
                  init_mf_embedding=False, add_path_length=True, path_agg = 'weighted_pooling',path_nhead = 1,
                  mf_path = None):
-        super(KPRNTransformer, self).__init__(e_emb_dim, t_emb_dim, r_emb_dim, hidden_dim, e_vocab_size,
-                                              t_vocab_size, r_vocab_size, tagset_size, no_rel)
+        super(KPAN, self).__init__(e_emb_dim, t_emb_dim, r_emb_dim, hidden_dim, e_vocab_size,
+                                   t_vocab_size, r_vocab_size, tagset_size, no_rel)
 
         # sum of embedding size (64+32+32=128)
         self.model_dim = e_emb_dim + t_emb_dim + r_emb_dim*(1-no_rel)
