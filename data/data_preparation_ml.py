@@ -14,7 +14,7 @@ import KPAN.constants.consts as consts
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--movies_file',
-                        default='ml_imdb_only_ml.csv',
+                        default='ml_imdb.csv',
                         help='Path to the CSV file containing song information')
     parser.add_argument('--interactions_file',
                         default='interactions.csv',

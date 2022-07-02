@@ -14,7 +14,7 @@ import KPAN.constants.consts as consts
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--songs_file',
-                        default='filter_songs.csv',
+                        default='songs.csv',
                         help='Path to the CSV file containing song information')
     parser.add_argument('--interactions_file',
                         default='filter_interactions.csv',
