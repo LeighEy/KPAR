@@ -1,10 +1,10 @@
-# KPAN
-We implemented the KPAN model on KKBox song dataset and MovieLens-IMDb (MI) dataset, compared it to a KPRN model (https://arxiv.org/abs/1811.04540).
+# KPAR
+We implemented the KPAR model on KKBox song dataset and MovieLens-IMDb (MI) dataset, compared it to a KPRN model (https://arxiv.org/abs/1811.04540).
 
-Python version is 3.6.9, and environment requirements can be installed using `KPAN_requirements.yml`
+Python version is 3.6.9, and environment requirements can be installed using `KPAR_requirements.yml`
 
 ## Usage Information
-To train and evaluate the KPAN model, you have multiple choices for sample the data:
+To train and evaluate the KPAR model, you have multiple choices for sample the data:
 - all data (subnetwork = full) 
 - random sampling (subnetwork = rs) - rs contains a random 10% sample of entities
 - "smart" sampling (subnetwork = dense) - contains the top 10% entities with highest degree
